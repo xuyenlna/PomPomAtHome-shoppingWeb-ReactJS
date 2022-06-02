@@ -3,8 +3,16 @@ import "./Filters.scss";
 import { countFabric, countSize } from "../countData";
 import HandleClickOutside from "../HandleClickOutside";
 
-export default function Filters(props) {
-  const { fabricList, sizeList, colorList, productList } = props;
+export default function FiltersForBedding(props) {
+  const {
+    fabricList,
+    sizeList,
+    colorList,
+    productList,
+    handleFilterFabric,
+    handleFilterColor,
+    handleFilterSize,
+  } = props;
 
   /* When the user clicks on the button,
   toggle between hiding and showing the dropdown content */
@@ -23,6 +31,24 @@ export default function Filters(props) {
   const togglingSize = () => setIsOpenSize(!isOpenSize);
   HandleClickOutside(ref3, () => setIsOpenSize(false));
 
+  //handle filter fabric
+  const handleFabricSelect = (e) => {
+    console.log(e.target.value);
+    handleFilterFabric(e.target.value);
+  };
+
+  // handle filter color
+  const handleColorSelect = (e) => {
+    const color = e.target.className;
+    handleFilterColor(color);
+  };
+
+  // handle filter size
+  const handleSizeSelect = (e) => {
+    const size = e.target.value;
+    handleFilterSize(size);
+  };
+
   return (
     <div className="product__filters">
       {/* fabric */}
@@ -35,10 +61,14 @@ export default function Filters(props) {
         {isOpenFabric && (
           <div className="dropdown__content-fabric">
             <ul>
-              {fabricList.map((item) => {
+              {fabricList.map((item, index) => {
                 return (
-                  <li className="checkbox">
-                    <input type="checkbox"></input>
+                  <li className="checkbox" key={index}>
+                    <input
+                      type="checkbox"
+                      onChange={handleFabricSelect}
+                      value={item}
+                    ></input>
                     <span>{item.toUpperCase()}</span>
                     <span>({countFabric(productList, item)})</span>
                   </li>
@@ -62,7 +92,11 @@ export default function Filters(props) {
               {colorList.map((item) => {
                 return (
                   <li>
-                    <div style={{ backgroundColor: item.colorHexa }}></div>
+                    <div
+                      onClick={handleColorSelect}
+                      className={item.colorName}
+                      style={{ backgroundColor: item.colorHexa }}
+                    ></div>
                     <span>{item.colorName.toUpperCase()}</span>
                   </li>
                 );
@@ -85,7 +119,11 @@ export default function Filters(props) {
               {sizeList.map((item) => {
                 return (
                   <li>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      onChange={handleSizeSelect}
+                      value={item}
+                    ></input>
                     <span>{item.toUpperCase()}</span>
                     <span>({countSize(productList, item)})</span>
                   </li>

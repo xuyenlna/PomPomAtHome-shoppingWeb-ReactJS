@@ -37,13 +37,13 @@ const Header = () => {
             <li className="dropdown">
               <span>BEDDING</span>
               <div className="dropdown__content">
-                <NavLink to="collection/duets" className="header-link">
+                <NavLink to="bedding/duets" className="header-link">
                   DUVETS & DUVET SETS
                 </NavLink>
-                <NavLink to="collection/coverlet" className="header-link">
+                <NavLink to="bedding/coverlet" className="header-link">
                   COVERLETS & BLANKETS
                 </NavLink>
-                <NavLink to="collection/bed-skirts" className="header-link">
+                <NavLink to="bedding/bed-skirts" className="header-link">
                   BED SKIRTS
                 </NavLink>
               </div>
@@ -53,13 +53,13 @@ const Header = () => {
             <li className="dropdown">
               <span>ACCESSORIES</span>
               <div className="dropdown__content">
-                <NavLink to="collection/big-pillow" className="header-link">
+                <NavLink to="accessories/big-pillow" className="header-link">
                   BIG PILLOWS 28" X 36"
                 </NavLink>
-                <NavLink to="collection/body-pillow" className="header-link">
+                <NavLink to="accessories/body-pillow" className="header-link">
                   BODY PILLOWS 18" X 60"
                 </NavLink>
-                <NavLink to="collection/curtains" className="header-link">
+                <NavLink to="accessories/curtains" className="header-link">
                   CURTAINS
                 </NavLink>
               </div>
@@ -68,7 +68,7 @@ const Header = () => {
             {/* sale */}
             <li className="dropdown">
               <span>
-                <NavLink to="collection/sales" className="header-link-2">
+                <NavLink to="sales" className="header-link-2">
                   SALE
                 </NavLink>
               </span>

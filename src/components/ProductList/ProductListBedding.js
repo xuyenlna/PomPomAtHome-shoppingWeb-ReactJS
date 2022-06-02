@@ -8,21 +8,15 @@ export default function ProductListBedding(props) {
       <div className="row">
         {productList.map((item) => {
           return (
-            <>
-              {item.colorList.map((x, index) => {
-                return (
-                  <CardProductItemForBedding
-                    key={index}
-                    productName={item.productName}
-                    price={item.price}
-                    firstImage={x.imageSrc[0]}
-                    secondImage={x.imageSrc[1]}
-                    colorName={x.colorName}
-                    colorHexa={x.colorHexa}
-                  />
-                );
-              })}
-            </>
+            <CardProductItemForBedding
+              key={item.id}
+              productName={item.productName}
+              price={item.price}
+              firstImage={item.imageSrc[0]}
+              secondImage={item.imageSrc[1]}
+              colorName={item.colorName}
+              colorHexa={item.colorHexa}
+            />
           );
         })}
       </div>

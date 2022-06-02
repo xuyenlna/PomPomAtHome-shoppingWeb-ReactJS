@@ -14,4 +14,13 @@
         color: $font-color;
         text-align: center;
     }
+
+    .product__countAndSort {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        .product__count > span {
+            font-weight: 600;
+        }
+    }
 }

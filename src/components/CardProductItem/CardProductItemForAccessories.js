@@ -1,7 +1,7 @@
 import React from "react";
 import "./CardProductItemForAccessories.scss";
 
-export default function CardProductItemForBedding(props) {
+export default function CardProductItemForAccessories(props) {
   const { firstImage, secondImage, productName, price, colorList } = props;
 
   return (
