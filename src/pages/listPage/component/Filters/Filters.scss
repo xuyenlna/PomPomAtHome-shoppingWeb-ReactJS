@@ -1,0 +1,108 @@
+@import "../../../../index.scss";
+
+.product__filters-item {
+    position: relative;
+    display: inline-block;
+    color: $font-color;
+    font-size: 14;
+    font-weight: 400;
+    margin-right: 10px;
+
+    .dropdown-btn {
+        display: inline-block;
+        background-color: #fff;
+        border: 0.1px solid $border-color;
+        padding: 5px 20px;
+        cursor: pointer;
+
+        span {
+            padding-right: 8px;
+        }
+
+        i {
+            color: $font-color;
+        }
+    }
+    .dropdown-btn:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown__content-fabric,
+    .dropdown__content-size {
+        // display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 250px;
+        border: 0.1px solid $border-color;
+        margin-top: 5px;
+        z-index: 1;
+        > ul {
+            list-style: none;
+            padding: 10px;
+            li {
+                padding: 5px;
+                align-items: center;
+                display: flex;
+                cursor: pointer;
+
+                input {
+                    margin-right: 5px;
+                    height: 15px;
+                    width: 15px;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    -o-appearance: none;
+                    appearance: none;
+                    border: 1px solid $border-color;
+                    outline: none;
+                    transition-duration: 0.3s;
+                    background-color: transparent;
+                    cursor: pointer;
+                }
+                input:checked {
+                    background-color: $background-color;
+                    border: 1px solid black;
+                }
+                input:checked ~ span {
+                    color: black;
+                    font-weight: 600;
+                }
+
+                span:last-child {
+                    right: 10px;
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    .dropdown__content-color {
+        position: absolute;
+        background-color: #fff;
+        min-width: 250px;
+        border: 0.1px solid $border-color;
+        margin-top: 5px;
+        z-index: 1;
+        > ul {
+            list-style: none;
+            padding: 10px;
+            li {
+                padding: 5px;
+                align-items: center;
+                display: flex;
+                cursor: pointer;
+
+                div {
+                    height: 30px;
+                    width: 30px;
+                    // background-color: green;
+                    display: inline-block;
+                    margin-right: 10px;
+                    border: solid 0.1px $border-color;
+                }
+                div:hover {
+                    border: solid 2px black;
+                }
+            }
+        }
+    }
+}

@@ -1,16 +1,24 @@
 import React from "react";
 import "./Header.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <>
-      {/* headerFirst */}
+      {/* headerFirst Login included */}
       <div className="header__first">
         <div>
           <div>
             <i class="fa fa-user"></i>
-            <span> Login</span>
+            <span
+              onClick={() => {
+                navigate("/account/login", { replace: true });
+              }}
+            >
+              {" "}
+              Login
+            </span>
           </div>
           <span>FREE SHIPPING OVER $49 (CONTINENTAL U.S.)</span>
           <div>
@@ -93,7 +101,12 @@ const Header = () => {
             {/* cart */}
             <li className="dropdown">
               <span>
-                <NavLink className="header-link-2" to="cart">
+                <NavLink
+                  className="header-link-2"
+                  to="cart"
+                  data-bs-toggle="modal"
+                  data-bs-target="#shopping__cart"
+                >
                   CART <span>($200)</span>
                 </NavLink>
               </span>

@@ -7,23 +7,33 @@ const productApi = {
   },
 
   get(id) {
-    const url = `/products?productName=coverlet/${id}`;
+    const url = `/products/${id}`;
     return axiosClient.get(url);
   },
 
   add(data) {
-    const url = "/products?productName=coverlet";
+    const url = "/products";
     return axiosClient.post(url, data);
   },
 
   update(data) {
-    const url = `/products?productName=coverlet/${data.id}`;
+    const url = `/products/${data.id}`;
     return axiosClient.patch(url, data);
   },
 
   remove(id) {
-    const url = `/products?productName=coverlet/${id}`;
+    const url = `/products/${id}`;
     return axiosClient.delete(url);
+  },
+
+  filterByProductName(name) {
+    const url = `/products?productName=${name}`;
+    return axiosClient.get(url);
+  },
+
+  filterByCategoryName(name) {
+    const url = `/products?CategoryName=${name}`;
+    return axiosClient.get(url);
   },
 };
 

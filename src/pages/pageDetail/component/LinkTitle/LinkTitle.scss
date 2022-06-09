@@ -1,0 +1,18 @@
+@import "../../../../index.scss";
+
+.linkTitle {
+    font-size: 14px;
+    color: $font-color;
+    font-weight: 400;
+
+    i {
+        margin: 0 15px;
+    }
+    a {
+        transition: 0.5s ease;
+    }
+    a:hover {
+        text-decoration: underline;
+        color: $hover-color;
+    }
+}
