@@ -11,6 +11,8 @@ export default function CardProductItemForBedding(props) {
     price,
     colorHexa,
     productId,
+    onSale,
+    salePrice,
   } = props;
 
   let navigate = useNavigate();
@@ -19,6 +21,7 @@ export default function CardProductItemForBedding(props) {
   };
   return (
     <div className="col-4 card-item" onClick={handleClick}>
+      {onSale == "true" && <div className="onSale">SALE</div>}
       <a className="card-img">
         {/* <img
           className="card-secondItemImg"
@@ -41,7 +44,22 @@ export default function CardProductItemForBedding(props) {
             {productName} - {colorName.toUpperCase()}
           </h5>
         </a>
-        <p>$ {price}</p>
+
+        {onSale === "false" && <span>$ {price}</span>}
+
+        {onSale === "true" && (
+          <>
+            <span
+              style={{
+                textDecoration: "line-through",
+              }}
+            >
+              $ {price}
+            </span>
+            <span>$ {salePrice}</span>
+          </>
+        )}
+
         <div
           className="card-itemColor"
           style={{ backgroundColor: colorHexa }}

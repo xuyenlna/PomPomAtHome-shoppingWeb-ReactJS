@@ -1,38 +1,76 @@
 import React from "react";
 import "./AddToCart.scss";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Controller } from "react-hook-form";
+import { FormControl, FormHelperText } from "@mui/material";
 
-export default function AddToCart({ product }) {
+export default function AddToCart({ product, onSubmit = null }) {
+  const schema = yup.object({
+    quantity: yup
+      .number()
+      .required("Please enter quantity")
+      .min(1, "Minimum order is 0ne"),
+  });
+
+  const form = useForm({
+    defaultValues: {
+      quantity: 1,
+    },
+    resolver: yupResolver(schema),
+  });
+  const {
+    formState: { errors },
+  } = form;
+
   return (
     <>
-      {/* <div className="product__info-quantity">
-        <p>QUANTITY</p>
-        <div>
-          <span>-</span>
-          <input value={1} />
-          <span>+</span>
-        </div>
-        <p>
-          <span>{product.inStock}</span> IN STOCK
-        </p>
-      </div>
-
-      <div className="addToCartButton">
-        ADD TO CART. <span> $230</span>
-      </div> */}
-
-      <form className="product__info-quantity">
+      <form
+        className="product__info-quantity"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <p>QUANTITY</p>
 
         <div>
-          <span>-</span>
-          <input value={1} />
-          <span>+</span>
+          <Controller
+            name="quantity"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value, name } }) => (
+              <>
+                <span
+                  onClick={() =>
+                    form.setValue(
+                      name,
+                      Number.parseInt(value) ? Number.parseInt(value) - 1 : 1
+                    )
+                  }
+                >
+                  -
+                </span>
+                <input value={value} onChange={onChange} onBlur={onBlur} />
+                <span
+                  onClick={() =>
+                    form.setValue(
+                      name,
+                      Number.parseInt(value) ? Number.parseInt(value) + 1 : 1
+                    )
+                  }
+                >
+                  +
+                </span>
+              </>
+            )}
+          />
         </div>
+        <p>{errors?.message}</p>
         <p>
           <span>{product.inStock}</span> IN STOCK
         </p>
 
-        <div className="addToCartButton">ADD TO CART</div>
+        <button type="submit " className="addToCartButton">
+          ADD TO CART
+        </button>
       </form>
     </>
   );

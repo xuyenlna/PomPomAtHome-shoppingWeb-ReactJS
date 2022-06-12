@@ -17,6 +17,8 @@ export default function ProductListBedding(props) {
               colorName={item.colorName}
               colorHexa={item.colorHexa}
               productId={item.id}
+              onSale={item.onSale}
+              salePrice={item.salePrice}
             />
           );
         })}

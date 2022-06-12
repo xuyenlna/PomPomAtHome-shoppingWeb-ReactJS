@@ -1,54 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart, increaseQuantity } from "../../redux/cartSlice";
+import { cartItemTotalSelector } from "../../redux/selectors";
+import "./Cart.scss";
 
 export default function Cart() {
+  const dispatch = useDispatch();
+  const cartTotalAmount = useSelector(cartItemTotalSelector);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   return (
-    <div>
-      <div>
-        {/* Button trigger modal */}
-        {/* <button
-          type="button"
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#shopping__cart"
-        >
-          Launch demo modal
-        </button> */}
-        {/* Modal */}
-        <div
-          className="modal fade"
-          id="shopping__cart"
-          tabIndex={-1}
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Modal title
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                />
+    <div id="cart">
+      <p className="cart__title">YOUR CART</p>
+
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Price</td>
+            <td style={{ textAlign: "center" }}>Quantity</td>
+            <td style={{ textAlign: "right" }}>Total</td>
+          </tr>
+        </thead>
+        <tbody>
+          {/* <tr>
+            <td className="cart-img">
+              <img src="https://cdn.shopify.com/s/files/1/1331/1269/products/louwie_cream_front_web_1080x.jpg?v=1620845584"></img>
+            </td>
+            <td className="cart-desc">
+              <p>Biscayne - SAND</p>
+              <p>QUEEN DUET COVER</p>
+              <button>REMOVE</button>
+            </td>
+            <td className="cart-price">$ 333</td>
+            <td className="cart-quantity">
+              <div>
+                <span>-</span>
+                <input value={1} />
+                <span>+</span>
               </div>
-              <div className="modal-body">...</div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </div>
+            </td>
+            <td className="cart-amount">$ 425</td>
+          </tr> */}
+          {cartItems.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td className="cart-img">
+                  <img src={item.product.imageSrc[0]} alt="image"></img>
+                </td>
+                <td className="cart-desc">
+                  <p>
+                    {item.product.productName} -{" "}
+                    {item.product.colorName.toUpperCase()}
+                  </p>
+                  <p>QUEEN DUET COVER</p>
+                  <button onClick={() => dispatch(removeFromCart(item.id))}>
+                    REMOVE
+                  </button>
+                </td>
+                <td className="cart-price">$ {item.product.salePrice}</td>
+                <td className="cart-quantity">
+                  <div>
+                    <span onClick={() => {}}>-</span>
+                    <input value={item.quantity} />
+                    <span onClick={() => dispatch(increaseQuantity(item.id))}>
+                      +
+                    </span>
+                  </div>
+                </td>
+                <td className="cart-amount">
+                  $ {item.product.salePrice * item.quantity}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      <div className="cart__footer">
+        <p>
+          SUBTOTAL - ALL SALE ITEMS ARE FINAL SALE{" "}
+          <span>$ {cartTotalAmount}</span>
+        </p>
+        <p tyle={{ textAlign: "left" }}>
+          Interest-free installments by <span>Afterpay</span> available between{" "}
+          <span>$35.00 - $1000.00</span>{" "}
+          <a href="https://www.afterpay.com/installment-agreement">More info</a>
+        </p>
+
+        <p>Shipping & taxes calculated at checkout</p>
+
+        <div className="cart-button">
+          <button className="update-button">UPDATE CART</button>
+          <button className="submit-button">CHECK OUT</button>
         </div>
       </div>
     </div>

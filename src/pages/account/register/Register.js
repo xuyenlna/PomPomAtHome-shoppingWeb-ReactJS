@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
   const navigate = useNavigate();
 
-  let regex = /^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$/;
   const schema = yup
     .object({
       fullName: yup.string().required("Full Name is required!"),

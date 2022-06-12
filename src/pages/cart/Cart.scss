@@ -1,0 +1,119 @@
+@import "../../index.scss";
+
+#cart {
+    width: 90%;
+    margin: 40px auto 80px;
+
+    .cart__title {
+        font-size: 26px;
+    }
+
+    table {
+        width: 100%;
+
+        tr {
+            border-bottom: 0.5px solid;
+        }
+        td {
+            padding: 20px 0;
+            font-size: 16px;
+        }
+
+        tbody {
+            .cart-img {
+                img {
+                    width: 100px;
+                    height: auto;
+                }
+            }
+            .cart-desc {
+                p:first-child {
+                    font-size: 22px;
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                }
+
+                button {
+                    border: none;
+                    background-color: #fff;
+                    color: #ccc;
+                    cursor: pointer;
+                }
+            }
+            .cart-price {
+                font-size: 18px;
+            }
+            .cart-quantity {
+                div {
+                    border: solid 1px $border-color;
+                    width: 120px;
+                    margin: auto;
+                    text-align: center;
+                    input {
+                        width: 60px;
+                        text-align: center;
+                        font-size: 16px;
+                        font-weight: 500;
+                        border: none;
+                    }
+                    span {
+                        font-size: 18px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        text-align: center;
+                    }
+                }
+            }
+            .cart-amount {
+                text-align: right;
+                font-size: 18px;
+            }
+        }
+    }
+
+    .cart__footer {
+        margin-top: 30px;
+        text-align: right;
+        p:first-child {
+            span {
+                font-size: 30px;
+            }
+        }
+        p:nth-child(2) {
+            span {
+                font-weight: bold;
+            }
+            a {
+                text-decoration: underline;
+                color: #3a434d;
+            }
+        }
+        p:nth-child(3) {
+            font-style: italic;
+        }
+
+        .update-button {
+            padding: 5px 15px;
+            font-size: 18px;
+            border-radius: 2px;
+            border: solid 1px black;
+            // background-color: #fff;
+            &:hover {
+                background-color: #7c8399;
+            }
+        }
+        .submit-button {
+            padding: 5px 15px;
+            font-size: 18px;
+            margin-left: 10px;
+            border: solid 0.5px $border-color;
+            border-radius: 2px;
+            color: white;
+            background-color: #3a434d;
+            &:hover {
+                background-color: #7c8399;
+                color: black;
+            }
+        }
+    }
+}

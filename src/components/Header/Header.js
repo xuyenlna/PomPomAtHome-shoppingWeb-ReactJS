@@ -1,9 +1,14 @@
 import React from "react";
 import "./Header.scss";
 import { NavLink, useNavigate } from "react-router-dom";
+import "../../pages/cart/Cart";
+import { createSelector } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { cartItemTotalSelector } from "../../redux/selectors";
 
 const Header = () => {
   const navigate = useNavigate();
+  const totalAmountCart = useSelector(cartItemTotalSelector);
   return (
     <>
       {/* headerFirst Login included */}
@@ -100,15 +105,17 @@ const Header = () => {
 
             {/* cart */}
             <li className="dropdown">
-              <span>
-                <NavLink
-                  className="header-link-2"
-                  to="cart"
-                  data-bs-toggle="modal"
-                  data-bs-target="#shopping__cart"
-                >
-                  CART <span>($200)</span>
-                </NavLink>
+              <span
+                onClick={() => {
+                  navigate("/cart", { replace: true });
+                }}
+              >
+                <a>
+                  CART{" "}
+                  <span style={{ fontWeight: "bold" }}>
+                    ($ {totalAmountCart})
+                  </span>
+                </a>
               </span>
             </li>
           </ul>

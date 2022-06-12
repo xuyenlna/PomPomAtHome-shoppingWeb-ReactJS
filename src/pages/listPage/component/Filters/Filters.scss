@@ -94,13 +94,12 @@
                 div {
                     height: 30px;
                     width: 30px;
-                    // background-color: green;
                     display: inline-block;
                     margin-right: 10px;
                     border: solid 0.1px $border-color;
-                }
-                div:hover {
-                    border: solid 2px black;
+                    &:hover {
+                        border: solid 2px black;
+                    }
                 }
             }
         }

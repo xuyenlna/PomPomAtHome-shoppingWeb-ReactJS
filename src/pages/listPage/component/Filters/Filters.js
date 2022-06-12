@@ -96,6 +96,7 @@ export default function FiltersForBedding(props) {
                       onClick={handleColorSelect}
                       className={item.colorName}
                       style={{ backgroundColor: item.colorHexa }}
+                      type="checkbox"
                     ></div>
                     <span>{item.colorName.toUpperCase()}</span>
                   </li>
