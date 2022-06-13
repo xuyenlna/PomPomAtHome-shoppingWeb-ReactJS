@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import productApi from "../../../../api/productsApi";
 import { addToCart } from "../../../../redux/cartSlice";
@@ -9,8 +9,10 @@ import "./ProductInfo.scss";
 export default function ProductInfo({ product }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [sizeSelectedStyle, SetSizeSelectedStyle] = useState({});
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const [size, setSize] = useState("");
+  const [className, setClassName] = useState("product__info-size-item");
 
   const handleSelectColor = (colorName) => {
     (async () => {
@@ -28,21 +30,40 @@ export default function ProductInfo({ product }) {
     })();
   };
 
-  const handleSelectSize = (size) => {
-    //css for the size selected
-    SetSizeSelectedStyle({ backgroundColor: "green" });
+  const handleSelectSize = (sizeSelected) => {
+    if (size === sizeSelected) {
+      setSize("");
+    } else {
+      setSize(sizeSelected);
+    }
   };
 
   // handle submit add to cart form
   const handleAddToCartSubmit = (formValues) => {
-    dispatch(
-      addToCart({
-        id: product.id,
-        product,
-        quantity: formValues.quantity,
-      })
+    const index = cartItems.findIndex(
+      (item) => item.id === product.id && item.size === size
     );
+
+    if (size === "") {
+      alert("pls choose the size");
+    }
+    if (
+      (index === -1 && size !== "") ||
+      (index >= 0 &&
+        formValues.quantity + cartItems[index].quantity <= product.inStock &&
+        size !== "")
+    ) {
+      dispatch(
+        addToCart({
+          id: product.id,
+          product,
+          quantity: formValues.quantity,
+          size: size,
+        })
+      );
+    }
   };
+
   return (
     <div className="col-4 product__info">
       {/* price */}
@@ -86,6 +107,19 @@ export default function ProductInfo({ product }) {
         <p>SELECT COLOR</p>
         <div>
           {product.colorList.map((item, index) => {
+            if (product.colorName === item.colorName) {
+              return (
+                <a key={index}>
+                  <div
+                    onClick={() => {
+                      handleSelectColor(item.colorName);
+                    }}
+                    className="product__info-colorItem active-color "
+                    style={{ backgroundColor: item.colorHexa }}
+                  ></div>
+                </a>
+              );
+            }
             return (
               <a key={index}>
                 <div
@@ -107,11 +141,13 @@ export default function ProductInfo({ product }) {
         {product.size.map((item, index) => {
           return (
             <div
-              // style={sizeSelectedStyle}
+              name={item}
               key={index}
-              className="product__info-size-item"
-              onClick={(item) => {
-                handleSelectSize(item);
+              className={className}
+              onClick={(e) => {
+                const size = e.target.getAttribute("name");
+                e.currentTarget.classList.toggle("size-selected");
+                handleSelectSize(size);
               }}
             >
               {item.toUpperCase()}

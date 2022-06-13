@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Controller } from "react-hook-form";
 import { FormControl, FormHelperText } from "@mui/material";
+import { useSelector } from "react-redux";
+import { cartItemsCountSelector } from "../../../../redux/selectors";
 
 export default function AddToCart({ product, onSubmit = null }) {
   const schema = yup.object({
@@ -23,6 +25,9 @@ export default function AddToCart({ product, onSubmit = null }) {
   const {
     formState: { errors },
   } = form;
+
+  const countCartItems = useSelector(cartItemsCountSelector);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
     <>
@@ -50,12 +55,22 @@ export default function AddToCart({ product, onSubmit = null }) {
                 </span>
                 <input value={value} onChange={onChange} onBlur={onBlur} />
                 <span
-                  onClick={() =>
-                    form.setValue(
-                      name,
-                      Number.parseInt(value) ? Number.parseInt(value) + 1 : 1
-                    )
-                  }
+                  onClick={() => {
+                    const index = cartItems.findIndex(
+                      (item) => item.id === product.id
+                    );
+
+                    if (
+                      (index === -1 && value < product.inStock) ||
+                      (index >= 0 &&
+                        value + cartItems[index].quantity < product.inStock)
+                    ) {
+                      form.setValue(
+                        name,
+                        Number.parseInt(value) ? Number.parseInt(value) + 1 : 1
+                      );
+                    }
+                  }}
                 >
                   +
                 </span>
@@ -69,7 +84,7 @@ export default function AddToCart({ product, onSubmit = null }) {
         </p>
 
         <button type="submit " className="addToCartButton">
-          ADD TO CART
+          ADD TO CART {countCartItems !== 0 && <span>({countCartItems})</span>}
         </button>
       </form>
     </>

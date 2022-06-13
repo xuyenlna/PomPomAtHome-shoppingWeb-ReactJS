@@ -44,7 +44,7 @@
                 font-size: 18px;
             }
             .cart-quantity {
-                div {
+                div:first-child {
                     border: solid 1px $border-color;
                     width: 120px;
                     margin: auto;

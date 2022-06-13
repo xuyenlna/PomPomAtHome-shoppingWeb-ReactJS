@@ -112,9 +112,11 @@ const Header = () => {
               >
                 <a>
                   CART{" "}
-                  <span style={{ fontWeight: "bold" }}>
-                    ($ {totalAmountCart})
-                  </span>
+                  {totalAmountCart !== 0 && (
+                    <span style={{ fontWeight: "bold" }}>
+                      ($ {totalAmountCart})
+                    </span>
+                  )}
                 </a>
               </span>
             </li>

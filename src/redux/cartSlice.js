@@ -3,20 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    // showMiniCart: false,
     cartItems: [],
+    showTextErrors: false,
   },
   reducers: {
-    // showMiniCart(state) {
-    //   state.showMiniCart = true;
-    // },
-    // hideMiniCart(state) {
-    //   state.showMiniCart = false;
-    // },
     addToCart(state, action) {
-      // newItem = {id, product, quantity}
+      // newItem = {id, product, quantity, size}
       const newItem = action.payload;
-      const index = state.cartItems.findIndex((item) => item.id === newItem.id);
+      const index = state.cartItems.findIndex(
+        (item) => item.id === newItem.id && item.size === newItem.size
+      );
       if (index === -1) {
         state.cartItems.push(newItem);
       }
@@ -26,37 +22,56 @@ const cartSlice = createSlice({
     },
 
     setQuantity(state, action) {
-      const { id, quantity } = action.payload;
+      const { id, quantity, size } = action.payload;
 
-      const index = state.cartItems.findIndex((item) => item.id === id);
+      const index = state.cartItems.findIndex(
+        (item) => item.id === id && item.size === size
+      );
       if (index >= 0) {
         state.cartItems[index].quantity = quantity;
       }
     },
 
     increaseQuantity(state, action) {
-      const { id } = action.payload;
-      const index = state.cartItems.findIndex((item) => item.id === id);
+      const { id, size } = action.payload;
+      const index = state.cartItems.findIndex(
+        (item) => item.id === id && item.size === size
+      );
       if (index >= 0) {
         state.cartItems[index].quantity += 1;
       }
     },
+    decreaseQuantity(state, action) {
+      const { id, size } = action.payload;
+      const index = state.cartItems.findIndex(
+        (item) => item.id === id && item.size === size
+      );
+      if (index >= 0 && state.cartItems[index].quantity > 0) {
+        state.cartItems[index].quantity -= 1;
+      }
+    },
 
     removeFromCart(state, action) {
-      const removedId = action.payload;
-      state.cartItems = state.cartItems.filter((x) => x.id !== removedId);
+      const { id, size } = action.payload;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== id || item.size !== size
+      );
+    },
+
+    showTextErrors(state) {
+      state.showTextErrors = true;
     },
   },
 });
 
 const { actions, reducer } = cartSlice;
 export const {
-  //   showMiniCart,
-  //   hideMiniCart,
   addToCart,
   setQuantity,
   increaseQuantity,
+  decreaseQuantity,
   removeFromCart,
+  showTextErrors,
 } = actions;
 
 export default reducer;
