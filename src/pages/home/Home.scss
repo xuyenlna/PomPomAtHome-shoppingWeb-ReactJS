@@ -1,5 +1,65 @@
-.home {
-    background-color: green;
-    height: 50px;
+.home-banner,
+.home-blog,
+.home-press {
+    .title {
+        text-align: center;
+        font-weight: 500;
+        font-size: 18px;
+        margin-top: 30px;
+        color: #8e8e8e;
+        font-weight: bold;
+    }
+    hr {
+        width: 40px;
+        border-top: 2px solid black;
+        margin: 10px auto;
+    }
+}
+
+.home-banner {
     width: 100%;
+    img {
+        max-width: 100%;
+    }
+}
+
+.home-press {
+    .press-list {
+        width: 70%;
+        display: flex;
+        margin: auto;
+        .press-item {
+            width: 20%;
+            margin-right: 20px;
+            cursor: pointer;
+            img {
+                width: 90%;
+            }
+        }
+        .press-item:last-child {
+            margin-right: -20px;
+        }
+    }
+}
+
+.home-blog {
+    width: 90%;
+    margin: auto;
+    .blog-list {
+        width: 100%;
+        margin: 0;
+        .blog-item {
+            transition: all ease-out 0.5s;
+            img {
+                max-width: 100%;
+                height: 300px;
+            }
+            p {
+                font-size: 20px;
+            }
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
 }

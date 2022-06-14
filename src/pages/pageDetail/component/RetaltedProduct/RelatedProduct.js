@@ -15,18 +15,24 @@ export default function RelatedProduct({ product }) {
         const productListByCategory = await productApi.filterByCategoryName(
           product.categoryName
         );
+        console.log(productListByCategory);
         const filteredList = productListByCategory.filter(
           (x) => x.id !== product.id
         );
 
+        console.log(productListByCategory);
         // get the random list of 6 items
         if (filteredList.length <= 6) {
           setRelatedList(filteredList);
         }
         if (filteredList.length > 6) {
           let list = [];
-          for (let i = 0; i < 6; i++) {
-            list.push(filteredList[i]);
+
+          while (list.length < 6) {
+            let randomNumber = Math.floor(Math.random() * filteredList.length);
+            if (list.indexOf(filteredList[randomNumber] === -1)) {
+              list.push(filteredList[randomNumber]);
+            }
           }
           setRelatedList(list);
         }
@@ -34,7 +40,7 @@ export default function RelatedProduct({ product }) {
         console.log("fail to fetch data", error);
       }
     })();
-  }, [product]);
+  }, []);
 
   const handleClick = (id) => {
     const newPathName = pathname.replace(product.id, id);

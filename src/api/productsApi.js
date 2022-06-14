@@ -32,7 +32,7 @@ const productApi = {
   },
 
   filterByCategoryName(name) {
-    const url = `/products?CategoryName=${name}`;
+    const url = `/products?categoryName=${name}`;
     return axiosClient.get(url);
   },
   filterByOnSale(params) {
