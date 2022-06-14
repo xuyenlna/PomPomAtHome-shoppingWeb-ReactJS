@@ -1,0 +1,34 @@
+@import "../../../index.scss";
+
+.ourStory {
+    width: 90%;
+    margin: 60px auto;
+    .title {
+        margin-bottom: 30px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 2.7em;
+        color: $font-color;
+        text-align: center;
+    }
+
+    .vedio {
+        width: 100%;
+        iframe {
+            margin: auto;
+        }
+    }
+
+    .slogan {
+        margin: 40px auto;
+        text-align: center;
+        font-size: 32px;
+        font-style: italic;
+        color: #7f7f7f;
+    }
+    .ourStory-content {
+        img {
+            max-width: 100%;
+        }
+    }
+}
