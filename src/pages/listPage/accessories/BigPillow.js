@@ -16,8 +16,8 @@ import FiltersViewer from "../component/FiltersViewer/FiltersViewer";
 import Loading from "../../../components/Loading/Loading";
 import BackToTop from "../../../components/BackToTop/BackToTop";
 
-export default function Sales() {
-  // const categoryName = CATEGORIES.COVERLET;
+export default function BigPillow() {
+  const categoryName = CATEGORIES.BIG_PILLOW;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,8 +25,7 @@ export default function Sales() {
     const params = queryString.parse(location.search);
     return {
       ...params,
-      // onsale: "true",
-      // categoryName: params.categoryName || categoryName,
+      categoryName: params.categoryName || categoryName,
       _sort: params._sort || "productName",
       _order: params._order || "asc",
     };
@@ -39,7 +38,7 @@ export default function Sales() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await productApi.filterByOnSale(queryParams);
+        const data = await productApi.getAll(queryParams);
         setProductList(data);
       } catch (error) {
         console.log("fail to fetch data");
@@ -60,6 +59,7 @@ export default function Sales() {
       _sort: newSortType,
       _order: newSortOrder,
     };
+
     navigate({
       pathName: location.pathname,
       search: queryString.stringify(filters),
@@ -118,20 +118,7 @@ export default function Sales() {
     <>
       <div className="product-collection">
         <div className="product-general">
-          <h1 className="product-title">SALES</h1>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "18px",
-              width: "60%",
-              margin: "-10px auto 80px",
-            }}
-          >
-            ALL SALE ITEMS ARE FINAL NO RETURNS - DYE LOTS MAY VARY.
-            <br />
-            THESE ITEMS ARE DISCONTINUED AND COLORS WILL VARY WITHIN
-            COLLECTIONS.
-          </p>
+          <h1 className="product-title">BIG PILLOWS</h1>
 
           <Filters
             colorList={colorList}

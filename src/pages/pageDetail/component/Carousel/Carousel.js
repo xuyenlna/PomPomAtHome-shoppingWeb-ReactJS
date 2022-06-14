@@ -20,7 +20,7 @@ export default function Carousel({ product }) {
               >
                 <img
                   src={product.imageSrc[index]}
-                  className="d-block w-100"
+                  className="d-block w-100 vh-100"
                   alt="image"
                 />
               </div>

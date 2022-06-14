@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./CardProductItemForBedding.scss";
+import "./CardProductItem.scss";
 
-export default function CardProductItemForBedding(props) {
+export default function CardProductItem(props) {
   const {
     firstImage,
     secondImage,
@@ -22,21 +22,23 @@ export default function CardProductItemForBedding(props) {
   return (
     <div className="col-4 card-item" onClick={handleClick}>
       {onSale == "true" && <div className="onSale">SALE</div>}
-      <a className="card-img">
-        {/* <img
+      <div className="card-img">
+        <a>
+          {/* <img
           className="card-secondItemImg"
           src={secondImage}
           alt="card-img"
           style={{ position: "absolute", opacity: 0 }}
         ></img> */}
 
-        <img
-          className="card-firstItemImg"
-          src={firstImage}
-          alt="card-img"
-          style={{ opacity: 1 }}
-        ></img>
-      </a>
+          <img
+            className="card-firstItemImg"
+            src={firstImage}
+            alt="card-img"
+            style={{ opacity: 1 }}
+          ></img>
+        </a>
+      </div>
 
       <div className="card-itemInfo">
         <a>
@@ -52,6 +54,7 @@ export default function CardProductItemForBedding(props) {
             <span
               style={{
                 textDecoration: "line-through",
+                textDecorationThickness: "2px",
               }}
             >
               $ {price}

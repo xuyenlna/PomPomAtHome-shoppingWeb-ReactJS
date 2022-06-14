@@ -1,14 +1,14 @@
 import React from "react";
-import CardProductItemForBedding from "../CardProductItem/CardProductItemForBedding";
+import CardProductItem from "../CardProductItem/CardProductItem";
 
-export default function ProductListBedding(props) {
+export default function ProductList(props) {
   const { productList } = props;
   return (
     <div className="product__list">
       <div className="row">
         {productList.map((item) => {
           return (
-            <CardProductItemForBedding
+            <CardProductItem
               key={item.id}
               productName={item.productName}
               price={item.price}

@@ -114,7 +114,7 @@ const Header = () => {
                   CART{" "}
                   {totalAmountCart !== 0 && (
                     <span style={{ fontWeight: "bold" }}>
-                      ($ {totalAmountCart})
+                      ($ {totalAmountCart.toLocaleString()})
                     </span>
                   )}
                 </a>

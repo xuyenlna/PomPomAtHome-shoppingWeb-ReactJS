@@ -141,7 +141,10 @@ export default function Cart() {
                     </td>
 
                     <td className="cart-amount">
-                      $ {item.product.salePrice * item.quantity}
+                      ${" "}
+                      {(
+                        item.product.salePrice * item.quantity
+                      ).toLocaleString()}
                     </td>
                   </tr>
                 );
@@ -152,7 +155,7 @@ export default function Cart() {
           <div className="cart__footer">
             <p>
               SUBTOTAL - ALL SALE ITEMS ARE FINAL SALE{" "}
-              <span>$ {cartTotalAmount}</span>
+              <span>$ {cartTotalAmount.toLocaleString()}</span>
             </p>
             <p tyle={{ textAlign: "left" }}>
               Interest-free installments by <span>Afterpay</span> available

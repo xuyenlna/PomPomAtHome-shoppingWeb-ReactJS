@@ -3,6 +3,7 @@
 .card-item {
     margin-top: 40px;
     position: relative;
+    width: 33.33333%;
 
     .onSale {
         position: absolute;
@@ -18,9 +19,15 @@
         align-items: center;
     }
 
-    img {
-        // width: 300px;
+    .card-img {
         width: 100%;
+        height: auto;
+        border: solid 0.5px #ccc;
+        img {
+            width: 100%;
+            max-height: 350px;
+            object-fit: fill;
+        }
     }
 
     .card-itemInfo {

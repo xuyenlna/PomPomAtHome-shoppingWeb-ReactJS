@@ -35,6 +35,10 @@ const productApi = {
     const url = `/products?CategoryName=${name}`;
     return axiosClient.get(url);
   },
+  filterByOnSale(params) {
+    const url = `/products?onSale=true`;
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default productApi;

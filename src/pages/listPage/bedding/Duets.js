@@ -1,19 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
-import "./Duets.scss";
-import productApi from "../../../../api/productsApi";
-import Filters from "../../../listPage/component/Filters/Filters";
-import Sorts from "../../../listPage/component/Sorts/Sorts";
-import { CATEGORIES } from "../../../../utility/constants";
+import "../listPages.scss";
+import productApi from "../../../api/productsApi";
+import Filters from "../../listPage/component/Filters/Filters";
+import Sorts from "../../listPage/component/Sorts/Sorts";
+import { CATEGORIES } from "../../../utility/constants";
 import {
   getColorAndHexaList,
   getFabricList,
   getSizeList,
-} from "../../../listPage/component/filterData";
-import ProductListBedding from "../../component/ProductList/ProductListBedding";
-import FiltersViewer from "../../component/FiltersViewer/FiltersViewer";
-import Loading from "../../../../components/Loading/Loading";
+} from "../../listPage/component/filterData";
+import ProductList from "../component/ProductList/ProductList";
+import FiltersViewer from "../component/FiltersViewer/FiltersViewer";
+import Loading from "../../../components/Loading/Loading";
+import BackToTop from "../../../components/BackToTop/BackToTop";
 
 export default function Duets() {
   const categoryName = CATEGORIES.DUET_COVER;
@@ -157,38 +158,41 @@ export default function Duets() {
   }
 
   return (
-    <div className="product-collection">
-      <div className="product-general">
-        <h1 className="product-title">DUVETS & DUVET SETS</h1>
+    <>
+      <div className="product-collection">
+        <div className="product-general">
+          <h1 className="product-title">DUVETS & DUVET SETS</h1>
 
-        <Filters
-          colorList={colorList}
-          sizeList={sizeList}
-          fabricList={fabricList}
-          productList={productList}
-          handleFilterFabric={handleFilterFabric}
-          handleFilterColor={handleFilterColor}
-          handleFilterSize={handleFilterSize}
-        />
-
-        <FiltersViewer queryParams={queryParams} onChange={setNewFilters} />
-
-        <hr />
-        <div className="product__countAndSort">
-          {/* count */}
-          <span className="product__count">
-            {" "}
-            <span>{productList.length}</span> products
-          </span>
-
-          {/* sort */}
-          <Sorts
+          <Filters
+            colorList={colorList}
+            sizeList={sizeList}
+            fabricList={fabricList}
             productList={productList}
-            handleSortChange={handleSortChange}
+            handleFilterFabric={handleFilterFabric}
+            handleFilterColor={handleFilterColor}
+            handleFilterSize={handleFilterSize}
           />
+
+          <FiltersViewer queryParams={queryParams} onChange={setNewFilters} />
+
+          <hr />
+          <div className="product__countAndSort">
+            {/* count */}
+            <span className="product__count">
+              {" "}
+              <span>{productList.length}</span> products
+            </span>
+
+            {/* sort */}
+            <Sorts
+              productList={productList}
+              handleSortChange={handleSortChange}
+            />
+          </div>
         </div>
+        <ProductList productList={productList} />
       </div>
-      <ProductListBedding productList={productList} />
-    </div>
+      <BackToTop />
+    </>
   );
 }
