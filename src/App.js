@@ -1,24 +1,23 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import GivingBack from "./pages/aboutUs/givingBack/GivingBack";
+import OurStory from "./pages/aboutUs/ourStory/OurStory";
+import Login from "./pages/account/login/Login";
+import Register from "./pages/account/register/Register";
+import ResetPassword from "./pages/account/resetPassword/ResetPassword";
+import Cart from "./pages/cart/Cart";
 import Home from "./pages/home/Home";
-import Duets from "./pages/listPage/bedding/Duets";
-import Coverlet from "./pages/listPage/bedding/Coverlet";
-import BedSkirts from "./pages/listPage/bedding/BedSkirts";
 import BigPillow from "./pages/listPage/accessories/BigPillow";
 import BodyPillow from "./pages/listPage/accessories/BodyPillow";
 import Curtains from "./pages/listPage/accessories/Curtains";
+import BedSkirts from "./pages/listPage/bedding/BedSkirts";
+import Coverlet from "./pages/listPage/bedding/Coverlet";
+import Duets from "./pages/listPage/bedding/Duets";
 import Sales from "./pages/listPage/sales/Sales";
-import OurStory from "./pages/aboutUs/ourStory/OurStory";
-import GivingBack from "./pages/aboutUs/givingBack/GivingBack";
-import Vedio from "./pages/aboutUs/vedio/Vedio";
-import PageNotFound from "./pages/pageNotFound/PageNotFound";
-import Cart from "./pages/cart/Cart";
 import PageDetail from "./pages/pageDetail/PageDetail";
-import ResetPassword from "./pages/account/resetPassword/ResetPassword";
-import Login from "./pages/account/login/Login";
-import Register from "./pages/account/register/Register";
+import PageNotFound from "./pages/pageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -72,7 +71,7 @@ function App() {
         {/* about us */}
         <Route exact path="our-story" element={<OurStory />} />
         <Route exact path="giving-back" element={<GivingBack />} />
-        <Route exact path="vedio" element={<Vedio />} />
+
         {/* cart */}
         <Route exact path="cart" element={<Cart />} />
 

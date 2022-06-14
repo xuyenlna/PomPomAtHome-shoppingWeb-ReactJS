@@ -1,0 +1,36 @@
+@import "../../../index.scss";
+
+.givingBack {
+    width: 90%;
+    margin: 60px auto;
+    text-align: center;
+
+    .title {
+        margin-bottom: 30px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 2.7em;
+        color: $font-color;
+        text-align: center;
+    }
+    .overView {
+        font-size: 16px;
+    }
+
+    .comment_item {
+        img {
+            width: 150px;
+            height: auto;
+            margin: 20px auto;
+        }
+
+        p {
+            font-size: 14px;
+            text-align: justify;
+            a {
+                text-decoration: underline;
+                color: $font-color;
+            }
+        }
+    }
+}

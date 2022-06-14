@@ -97,9 +97,6 @@ const Header = () => {
                 <NavLink to="giving-back" className="header-link">
                   GIVING BACK
                 </NavLink>
-                <NavLink to="vedio" className="header-link">
-                  VEDIO
-                </NavLink>
               </div>
             </li>
 
