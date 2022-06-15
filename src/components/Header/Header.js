@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.scss";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../../pages/cart/Cart";
+import "../../pages/cart/cart/Cart";
 import { createSelector } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { cartItemTotalSelector } from "../../redux/selectors";

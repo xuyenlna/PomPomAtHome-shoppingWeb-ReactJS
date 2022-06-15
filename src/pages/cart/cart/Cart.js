@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import BackToTop from "../../../components/BackToTop/BackToTop";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
   setQuantity,
   showTextErrors,
-} from "../../redux/cartSlice";
-import { cartItemTotalSelector } from "../../redux/selectors";
+} from "../../../redux/cartSlice";
+import { cartItemTotalSelector } from "../../../redux/selectors";
 import "./Cart.scss";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartTotalAmount = useSelector(cartItemTotalSelector);
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -169,11 +172,19 @@ export default function Cart() {
 
             <div className="cart-button">
               <button className="update-button">UPDATE CART</button>
-              <button className="submit-button">CHECK OUT</button>
+              <button
+                className="submit-button"
+                onClick={() => {
+                  navigate("/cart/checkout", { replace: true });
+                }}
+              >
+                CHECK OUT
+              </button>
             </div>
           </div>
         </div>
       )}
+      <BackToTop />
     </>
   );
 }

@@ -19,21 +19,21 @@ export default function RelatedProduct({ product }) {
         const filteredList = productListByCategory.filter(
           (x) => x.id !== product.id
         );
-
-        console.log(productListByCategory);
+        console.log(filteredList);
         // get the random list of 6 items
         if (filteredList.length <= 6) {
           setRelatedList(filteredList);
         }
         if (filteredList.length > 6) {
           let list = [];
-
           while (list.length < 6) {
             let randomNumber = Math.floor(Math.random() * filteredList.length);
-            if (list.indexOf(filteredList[randomNumber] === -1)) {
+            if (list.indexOf(filteredList[randomNumber]) === -1) {
               list.push(filteredList[randomNumber]);
             }
+            console.log(randomNumber);
           }
+          console.log(list);
           setRelatedList(list);
         }
       } catch (error) {

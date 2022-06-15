@@ -17,7 +17,7 @@ export default function FeaturedProducts() {
         let list = [];
         while (list.length < 6) {
           let randomNumber = Math.floor(Math.random() * allProductList.length);
-          if (list.indexOf(allProductList[randomNumber] === -1)) {
+          if (list.indexOf(allProductList[randomNumber]) === -1) {
             list.push(allProductList[randomNumber]);
           }
         }

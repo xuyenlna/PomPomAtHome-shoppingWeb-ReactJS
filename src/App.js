@@ -7,7 +7,9 @@ import OurStory from "./pages/aboutUs/ourStory/OurStory";
 import Login from "./pages/account/login/Login";
 import Register from "./pages/account/register/Register";
 import ResetPassword from "./pages/account/resetPassword/ResetPassword";
-import Cart from "./pages/cart/Cart";
+import Cart from "./pages/cart/cart/Cart";
+import CheckOut from "./pages/cart/checkOut/CheckOut";
+import PlaceAnOrder from "./pages/cart/placeAnOrder/PlaceAnOrder";
 import Home from "./pages/home/Home";
 import BigPillow from "./pages/listPage/accessories/BigPillow";
 import BodyPillow from "./pages/listPage/accessories/BodyPillow";
@@ -74,6 +76,8 @@ function App() {
 
         {/* cart */}
         <Route exact path="cart" element={<Cart />} />
+        <Route exact path="cart/checkout" element={<CheckOut />} />
+        <Route exact path="cart/place-an-order" element={<PlaceAnOrder />} />
 
         {/* account */}
         <Route exact path="account/login" element={<Login />} />
