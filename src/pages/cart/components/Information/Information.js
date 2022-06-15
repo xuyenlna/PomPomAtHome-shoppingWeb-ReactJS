@@ -4,9 +4,9 @@ import InputField from "../../../../components/formControl/InputField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-export default function Information() {
+export default function Information({ onSubmit }) {
   const navigate = useNavigate();
   const schema = yup
     .object({
@@ -14,27 +14,30 @@ export default function Information() {
         .string()
         .required("Email is required")
         .email("Please enter a valid email address"),
-      password: yup
-        .string()
-        .required("Password is required")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain from 8-20 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-        ),
+      country: yup.string().required("Country is required"),
+      firstName: yup.string().required("First Name is required"),
+      lastName: yup.string().required("Last Name is required"),
+      moreAddress: yup.string(),
+      address: yup.string().required("Address is required"),
+      city: yup.string().required("City is required"),
+      postalCode: yup.string(),
+      phone: yup.number().required("Number is required"),
     })
     .required();
 
   const form = useForm({
     defaultValues: {
       email: "",
-      password: "",
+      country: "",
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      postalCode: "",
+      phone: "",
     },
     resolver: yupResolver(schema),
   });
-
-  const handleSubmitForm = (values) => {
-    console.log("submitform", values);
-  };
 
   return (
     <div className="information col-7">
@@ -83,7 +86,7 @@ export default function Information() {
       <form
         className="information-info "
         style={{ width: "90%" }}
-        onSubmit={handleSubmitForm}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="information-title information-contact">
           <p>Contact information</p>
@@ -95,7 +98,7 @@ export default function Information() {
           </p>
         </div>
         <InputField name="email" label="Email" form={form} />
-        <div className="emailMe shipping-checkbox">
+        <div className="emailMe information-checkbox">
           <input
             type="checkbox"
             id="emailMe"
@@ -117,7 +120,6 @@ export default function Information() {
           </div>
         </div>
 
-        <InputField name="company" label="Company (optional)" form={form} />
         <InputField name="address" label="Address" form={form} />
         <InputField name="moreAddress" label="...." form={form} />
 
@@ -152,13 +154,8 @@ export default function Information() {
             <i class="fa fa-angle-left"></i>
             <a>Return to Cart</a>
           </div>
-          <button
-            class="submitButton"
-            type="submit"
-            onClick={() => {
-              navigate("/cart/place-an-order", { replace: "true" });
-            }}
-          >
+
+          <button class="submitButton" type="submit">
             Continue to shipping
           </button>
         </div>

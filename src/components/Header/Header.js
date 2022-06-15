@@ -1,10 +1,9 @@
 import React from "react";
-import "./Header.scss";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../pages/cart/cart/Cart";
-import { createSelector } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import { cartItemTotalSelector } from "../../redux/selectors";
+import "./Header.scss";
 
 const Header = () => {
   const navigate = useNavigate();

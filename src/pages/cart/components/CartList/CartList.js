@@ -1,72 +1,39 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { cartItemTotalSelector } from "../../../../redux/selectors";
 import "./CartList.scss";
 
 export default function CartList() {
+  const cartTotalAmount = useSelector(cartItemTotalSelector);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   return (
     <div className="cart-list col-5">
       <ul className="productItemList">
-        <li>
-          <div className="productItem">
-            <div className="productItem-img-desc">
-              <div className="item-img">
-                <div className="item-quantity">3</div>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/1331/1269/products/Curtains_Tie_Top_White_900x.jpg?v=1620845621"
-                  alt="productImg"
-                ></img>
+        {cartItems.map((item, index) => {
+          return (
+            <li key={index}>
+              <div className="productItem">
+                <div className="productItem-img-desc">
+                  <div className="item-img">
+                    <div className="item-quantity">{item.quantity}</div>
+                    <img src={item.product.imageSrc[0]} alt="productImg"></img>
+                  </div>
+                  <div className="item-desc">
+                    <p>
+                      {item.product.productName} - {item.product.colorName}
+                    </p>
+                    <p>{item.size}</p>
+                  </div>
+                </div>
+                <div className="item-price">
+                  $ <span>{item.quantity * item.product.price}</span>
+                </div>
               </div>
-              <div className="item-desc">
-                <p>TIE TOP CURTAIN - WHITE</p>
-                <p>QUEEN</p>
-              </div>
-            </div>
-            <div className="item-price">
-              $ <span>113</span>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div className="productItem">
-            <div className="productItem-img-desc">
-              <div className="item-img">
-                <div className="item-quantity">3</div>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/1331/1269/products/Curtains_Tie_Top_White_900x.jpg?v=1620845621"
-                  alt="productImg"
-                ></img>
-              </div>
-              <div className="item-desc">
-                <p>TIE TOP CURTAIN - WHITE</p>
-                <p>QUEEN</p>
-              </div>
-            </div>
-            <div className="item-price">
-              $ <span>113</span>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div className="productItem">
-            <div className="productItem-img-desc">
-              <div className="item-img">
-                <div className="item-quantity">3</div>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/1331/1269/products/Curtains_Tie_Top_White_900x.jpg?v=1620845621"
-                  alt="productImg"
-                ></img>
-              </div>
-              <div className="item-desc">
-                <p>TIE TOP CURTAIN - WHITE</p>
-                <p>QUEEN</p>
-              </div>
-            </div>
-            <div className="item-price">
-              $ <span>113</span>
-            </div>
-          </div>
-        </li>
+            </li>
+          );
+        })}
       </ul>
 
       <hr />
@@ -79,20 +46,20 @@ export default function CartList() {
       <div className="totalPrice">
         <p>Subtotal - ALL SALE ITEMS ARE FINAL SALE</p>
         <p>
-          $ <span>1198</span>
+          $ <span>{cartTotalAmount}</span>
         </p>
       </div>
 
       <div className="shippingPrice">
         <p>Shipping</p>
-        <p>Calculated at next step</p>
+        <p>$0</p>
       </div>
 
       <hr />
       <div className="sum">
         <p>Total</p>
         <p>
-          USD <span>1198</span>
+          USD <span>{cartTotalAmount}</span>
         </p>
       </div>
     </div>

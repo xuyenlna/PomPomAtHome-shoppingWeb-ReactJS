@@ -2,9 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./ShippingInfo.scss";
 
-export default function ShippingInfo() {
+export default function ShippingInfo(props) {
   const navigate = useNavigate();
-
+  const {
+    email,
+    phone,
+    firstName,
+    lastName,
+    address,
+    moreAddress,
+    city,
+    postalCode,
+    country,
+    onClickPlaceAnOrder,
+  } = props;
   return (
     <div className="shipping-info col-7">
       {/* link-title */}
@@ -33,7 +44,9 @@ export default function ShippingInfo() {
       <div class="contact-info">
         <div className="row contact-info-detail">
           <div class="col-2">Contact</div>
-          <div class="col-8">ABC@GMAIL.COM</div>
+          <div class="col-8">
+            {email} / {phone}
+          </div>
           <div
             class="col-2"
             style={{ color: "#e37648", cursor: "pointer" }}
@@ -46,8 +59,8 @@ export default function ShippingInfo() {
         <div className="row contact-info-detail">
           <div class="col-2">Ship to</div>
           <div class="col-8">
-            Chung cư Sài Gòn Avenue, Đường số 10, Phường Tam Bình, TP Thủ Đức,
-            TPHCM, Ho Chi Minh 700000, Vietnam
+            {firstName} {lastName}
+            {address}, {moreAddress}, {city}, {postalCode}, {country}
           </div>
           <div
             class="col-2"
@@ -68,7 +81,7 @@ export default function ShippingInfo() {
           <p>USPS Priority Mail International</p>
           <p>6 to 10 business days</p>
         </div>
-        <span>$10</span>
+        <span>$0</span>
       </div>
 
       {/* submit */}
@@ -80,7 +93,11 @@ export default function ShippingInfo() {
           <i class="fa fa-angle-left"></i>
           <a>Return to Information</a>
         </div>
-        <button class="submitButton" type="submit">
+        <button
+          class="submitButton"
+          type="submit"
+          onClick={onClickPlaceAnOrder}
+        >
           PLACE AN ORDER
         </button>
       </div>
