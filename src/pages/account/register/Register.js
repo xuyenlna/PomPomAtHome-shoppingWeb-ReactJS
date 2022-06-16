@@ -1,14 +1,19 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LinearProgress } from "@mui/material";
+import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
-import "./Register.scss";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import InputField from "../../../components/formControl/InputField";
 import PasswordField from "../../../components/formControl/PasswordField";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { register } from "../../../redux/userSlice";
+import "./Register.scss";
 
 export default function Register() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const schema = yup
     .object({
@@ -41,11 +46,24 @@ export default function Register() {
     resolver: yupResolver(schema),
   });
 
-  const handleSubmitForm = (values) => {
-    console.log("submitform", values);
+  const handleSubmitForm = async (values) => {
+    try {
+      //auto set userName = email
+      values.userName = values.email;
+      console.log("submitform", values);
+      const result = await dispatch(register(values));
+      const user = unwrapResult(result);
+      console.log("newusers", user);
+      form.reset();
+    } catch (error) {
+      console.log("fail to register", error);
+    }
   };
+  const { isSubmitting } = form.formState;
+
   return (
     <div className="form__container">
+      {isSubmitting && <LinearProgress />}
       <form
         className="form__box"
         onSubmit={form.handleSubmit(handleSubmitForm)}
@@ -60,7 +78,7 @@ export default function Register() {
           form={form}
         />
 
-        <button type="submit" className="form__button">
+        <button type="submit" className="form__button" disabled={isSubmitting}>
           Create{" "}
         </button>
       </form>

@@ -28,7 +28,7 @@ export default function CartList() {
                   </div>
                 </div>
                 <div className="item-price">
-                  $ <span>{item.quantity * item.product.price}</span>
+                  $ <span>{item.quantity * item.product.salePrice}</span>
                 </div>
               </div>
             </li>
