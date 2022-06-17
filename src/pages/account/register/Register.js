@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LinearProgress } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -10,6 +9,8 @@ import InputField from "../../../components/formControl/InputField";
 import PasswordField from "../../../components/formControl/PasswordField";
 import { register } from "../../../redux/userSlice";
 import "./Register.scss";
+import Swal from "sweetalert2";
+import Loading from "../../../components/Loading/Loading";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -48,22 +49,33 @@ export default function Register() {
 
   const handleSubmitForm = async (values) => {
     try {
-      //auto set userName = email
-      values.userName = values.email;
-      console.log("submitform", values);
+      console.log("registerForm", values);
       const result = await dispatch(register(values));
       const user = unwrapResult(result);
       console.log("newusers", user);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Create an account successfully!!!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+
       form.reset();
     } catch (error) {
       console.log("fail to register", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error.message,
+        showConfirmButton: true,
+      });
     }
   };
-  const { isSubmitting } = form.formState;
 
   return (
     <div className="form__container">
-      {isSubmitting && <LinearProgress />}
+      {form.formState.isSubmitting && <Loading />}
       <form
         className="form__box"
         onSubmit={form.handleSubmit(handleSubmitForm)}
@@ -78,7 +90,11 @@ export default function Register() {
           form={form}
         />
 
-        <button type="submit" className="form__button" disabled={isSubmitting}>
+        <button
+          type="submit"
+          className="form__button"
+          disabled={form.formState.isSubmitting}
+        >
           Create{" "}
         </button>
       </form>

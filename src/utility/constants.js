@@ -12,3 +12,8 @@ export const CATEGORIES = {
   BODY_PILLOW: "body-pillow",
   CURTAIN: "curtain",
 };
+
+export const STORAGE_KEYS = {
+  TOKEN: "token",
+  USER: "user",
+};

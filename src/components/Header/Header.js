@@ -8,22 +8,42 @@ import "./Header.scss";
 const Header = () => {
   const navigate = useNavigate();
   const totalAmountCart = useSelector(cartItemTotalSelector);
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLoggedIn = !!loggedInUser.email;
   return (
     <>
       {/* headerFirst Login included */}
       <div className="header__first">
         <div>
-          <div>
-            <i class="fa fa-user"></i>
-            <span
-              onClick={() => {
-                navigate("/account/login", { replace: true });
-              }}
-            >
-              {" "}
-              Login
-            </span>
-          </div>
+          {!isLoggedIn && (
+            <div>
+              <i class="fa fa-user"></i>
+              <span
+                onClick={() => {
+                  navigate("/account/login", { replace: true });
+                }}
+              >
+                {" "}
+                Login
+              </span>
+            </div>
+          )}
+
+          {isLoggedIn && (
+            <div>
+              <i class="fa fa-user"></i>
+              <span
+                style={{ fontStyle: "italic" }}
+                onClick={() => {
+                  navigate("/account/login", { replace: true });
+                }}
+              >
+                {" "}
+                Hello {loggedInUser.email}
+              </span>
+            </div>
+          )}
+
           <span>FREE SHIPPING OVER $49 (CONTINENTAL U.S.)</span>
           <div>
             <i class="fa fa-search"></i>

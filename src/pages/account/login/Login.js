@@ -1,72 +1,45 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
-import "./Login.scss";
-import InputField from "../../../components/formControl/InputField";
-import PasswordField from "../../../components/formControl/PasswordField";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { login } from "../../../redux/userSlice";
+import AccountInfo from "./AccountInfo";
+import LoginForm from "./LoginForm";
 
 export default function Login() {
   const navigate = useNavigate();
-  const schema = yup
-    .object({
-      email: yup
-        .string()
-        .required("Email is required")
-        .email("Please enter a valid email address"),
-      password: yup
-        .string()
-        .required("Password is required")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain from 8-20 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-        ),
-    })
-    .required();
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLoggedIn = !!loggedInUser.email;
 
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    resolver: yupResolver(schema),
-  });
-
-  const handleSubmitForm = (values) => {
-    console.log("submitform", values);
+  const handleSubmitForm = async (values) => {
+    try {
+      console.log("loginForm", values);
+      const result = await dispatch(login(values));
+      unwrapResult(result);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login successfully!!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log("fail to login", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Login fail!!",
+        showConfirmButton: true,
+      });
+    }
   };
   return (
-    <div className="form__container">
-      <form
-        className="form__box"
-        onSubmit={form.handleSubmit(handleSubmitForm)}
-      >
-        <p className="form__title">LOGIN</p>
-        <InputField name="email" label="Email" form={form} />
-        <PasswordField name="password" label="Password" form={form} />
-
-        <button type="submit" className="form__button">
-          Sign in
-        </button>
-      </form>
-
-      <p className="form__link">
-        <a
-          onClick={() => {
-            navigate("/account/register", { replace: true });
-          }}
-        >
-          Create account
-        </a>
-        <a
-          onClick={() => {
-            navigate("/account/resetPassword", { replace: true });
-          }}
-        >
-          Forgot Password
-        </a>
-      </p>
-    </div>
+    <>
+      {!isLoggedIn && <LoginForm onSubmit={handleSubmitForm} />}
+      {isLoggedIn && <AccountInfo />}
+    </>
   );
 }
