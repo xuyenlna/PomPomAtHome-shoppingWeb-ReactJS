@@ -2,9 +2,8 @@
 
 .card-item {
     margin-top: 40px;
-    position: relative;
     width: 33.33333%;
-
+    position: relative;
     .onSale {
         position: absolute;
         top: 0;
@@ -22,11 +21,38 @@
     .card-img {
         width: 100%;
         height: auto;
-        border: solid 0.5px #ccc;
+        // border: solid 0.5px #ccc;
+
+        a {
+            position: relative;
+            display: block;
+        }
         img {
             width: 100%;
             max-height: 350px;
-            object-fit: fill;
+            object-fit: cover;
+            margin: auto;
+        }
+
+        .card-firstItemImg {
+            opacity: 1;
+            transition: 0.5s ease-out;
+        }
+        .card-secondItemImg {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.5s ease-out;
+        }
+
+        &:hover {
+            .card-secondItemImg {
+                opacity: 1;
+            }
+            .card-firstItemImg {
+                opacity: 0;
+            }
         }
     }
 

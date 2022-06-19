@@ -47,7 +47,20 @@ export default function FeaturedProducts() {
                   handleClick(item.id, item.params);
                 }}
               >
-                <img src={item.imageSrc[0]} alt=""></img>
+                <img
+                  className="firstImg"
+                  src={item.imageSrc[0]}
+                  alt="image1"
+                ></img>
+                <img
+                  className="secondImg"
+                  src={
+                    item.imageSrc[1] !== undefined
+                      ? item.imageSrc[1]
+                      : item.imageSrc[0]
+                  }
+                  alt="image2"
+                ></img>
                 <p>
                   {item.productName.toUpperCase()}-{" "}
                   {item.colorName.toUpperCase()}
