@@ -1,19 +1,46 @@
-import React, { useRef, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import productApi from "../../../../api/productsApi";
 import { addToCart } from "../../../../redux/cartSlice";
-import AddToCart from "../AddToCart/AddToCart";
+import { cartItemsCountSelector } from "../../../../redux/selectors";
 import "./ProductInfo.scss";
 
 export default function ProductInfo({ product }) {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const [size, setSize] = useState("");
-  const [className, setClassName] = useState("product__info-size-item");
+  const countCartItems = useSelector(cartItemsCountSelector);
 
+  const [size, setSize] = useState("");
+  // const [sizeClassName, setSizeClassName] = useState("product__info-size-item");
+  const [showSizeHelperText, setShowSizeHelperText] = useState(false);
+  const [showQuantityHelperText, setShowQuantityHelperText] = useState(false);
+
+  //validate form quantity
+  const schema = yup.object({
+    quantity: yup
+      .number()
+      .required("Please enter quantity")
+      .min(1, "Minimum order is 0ne"),
+  });
+
+  const form = useForm({
+    defaultValues: {
+      quantity: 1,
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const {
+    formState: { errors },
+  } = form;
+
+  // handle select color
   const handleSelectColor = (colorName) => {
     (async () => {
       try {
@@ -30,22 +57,16 @@ export default function ProductInfo({ product }) {
     })();
   };
 
-  const handleSelectSize = (sizeSelected) => {
-    if (size === sizeSelected) {
-      setSize("");
-    } else {
-      setSize(sizeSelected);
-    }
-  };
-
-  // handle submit add to cart form
+  // handle add to cart submit
   const handleAddToCartSubmit = (formValues) => {
+    setShowQuantityHelperText(false); // remove the text "over stock limit incase submit form"
+
     const index = cartItems.findIndex(
       (item) => item.id === product.id && item.size === size
     );
 
     if (size === "") {
-      alert("pls choose the size");
+      setShowSizeHelperText(true);
     }
     if (
       (index === -1 && size !== "") ||
@@ -61,6 +82,8 @@ export default function ProductInfo({ product }) {
           size: size,
         })
       );
+
+      form.setValue("quantity", 0);
     }
   };
 
@@ -138,26 +161,140 @@ export default function ProductInfo({ product }) {
       {/* size List */}
       <div className="product__info-size">
         <p>SELECT SIZE</p>
-        {product.size.map((item, index) => {
+        {/* {product.size.map((item, index) => {
           return (
             <div
               name={item}
               key={index}
-              className={className}
+              className={sizeClassName}
               onClick={(e) => {
                 const size = e.target.getAttribute("name");
-                e.currentTarget.classList.toggle("size-selected");
-                handleSelectSize(size);
+                console.log(size);
+                setSize(size);
+                setSizeClassName("product__info-size-item");
+                e.target.classList.add("size-selected");
+                console.log(e.target);
               }}
             >
               {item.toUpperCase()}
             </div>
           );
-        })}
+        })} */}
+        <label for="size" style={{ marginRight: "10px" }}>
+          Choose a size:{" "}
+        </label>
+        <select
+          required
+          onChange={(e) => {
+            const size = e.target.value;
+            console.log(size);
+            setSize(size);
+            setShowSizeHelperText(false);
+          }}
+        >
+          <option>....</option>
+          {product.size.map((item, index) => {
+            return (
+              <option name={item} value={item} key={index}>
+                {item}
+              </option>
+            );
+          })}
+        </select>
+        <div
+          className="size-helpterText"
+          style={{
+            color: "red",
+            display: showSizeHelperText ? "block" : "none",
+          }}
+        >
+          Please choose a size
+        </div>
       </div>
 
-      {/* add to cart */}
-      <AddToCart product={product} onSubmit={handleAddToCartSubmit} />
+      {/* add to quantity to cart */}
+      {/* <AddToCart product={product} onSubmit={handleAddToCartSubmit} /> */}
+      <form
+        className="product__info-quantity"
+        onSubmit={form.handleSubmit(handleAddToCartSubmit)}
+      >
+        <p>QUANTITY</p>
+
+        <div>
+          <Controller
+            name="quantity"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value, name } }) => (
+              <>
+                <span
+                  onClick={() => {
+                    setShowQuantityHelperText(false); // max quantity
+                    form.setValue(
+                      name,
+                      Number.parseInt(value)
+                        ? Number.parseInt(value) - 1
+                        : Number.parseInt(value)
+                    );
+                  }}
+                >
+                  -
+                </span>
+                <input value={value} onChange={onChange} onBlur={onBlur} />
+                <span
+                  onClick={() => {
+                    const index = cartItems.findIndex(
+                      (item) => item.id === product.id
+                    );
+                    // increase 1 if value < product in stock
+                    if (
+                      (index === -1 && value < product.inStock) ||
+                      (index >= 0 &&
+                        value + cartItems[index].quantity < product.inStock)
+                    ) {
+                      form.setValue(
+                        name,
+                        Number.parseInt(value) ? Number.parseInt(value) + 1 : 1
+                      );
+                    }
+                    // show the helpter text if the quantity over the stock limit
+                    if (
+                      (index === -1 && value === product.inStock) ||
+                      (index >= 0 &&
+                        value + cartItems[index].quantity === product.inStock)
+                    ) {
+                      setShowQuantityHelperText(true);
+                    }
+                  }}
+                >
+                  +
+                </span>
+              </>
+            )}
+          />
+        </div>
+        {/* show errors if clicked when quantity = 0 */}
+        <p style={{ color: "red", fontSize: "14px" }}>
+          {errors.quantity?.message}
+        </p>
+        {/* show errors if exceed the stock limit */}
+        <p
+          style={{
+            color: "red",
+            fontSize: "14px",
+            display: showQuantityHelperText ? "block" : "none",
+          }}
+        >
+          "over the stock limit!!!"
+        </p>
+
+        <p>
+          <span>{product.inStock}</span> IN STOCK
+        </p>
+
+        <button type="submit " className="addToCartButton">
+          ADD TO CART {countCartItems !== 0 && <span>({countCartItems})</span>}
+        </button>
+      </form>
     </div>
   );
 }

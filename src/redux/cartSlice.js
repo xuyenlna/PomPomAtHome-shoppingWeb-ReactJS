@@ -4,7 +4,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: [],
-    showTextErrors: false,
   },
   reducers: {
     addToCart(state, action) {
@@ -57,10 +56,6 @@ const cartSlice = createSlice({
         (item) => item.id !== id || item.size !== size
       );
     },
-
-    showTextErrors(state) {
-      state.showTextErrors = true;
-    },
   },
 });
 
@@ -71,7 +66,6 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   removeFromCart,
-  showTextErrors,
 } = actions;
 
 export default reducer;

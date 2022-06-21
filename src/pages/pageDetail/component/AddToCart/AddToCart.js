@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddToCart.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { cartItemsCountSelector } from "../../../../redux/selectors";
 
 export default function AddToCart({ product, onSubmit = null }) {
+  const [showQuantityHelperText, setShowQuantityHelperText] = useState(false);
+
   const schema = yup.object({
     quantity: yup
       .number()
@@ -22,6 +24,7 @@ export default function AddToCart({ product, onSubmit = null }) {
     },
     resolver: yupResolver(schema),
   });
+
   const {
     formState: { errors },
   } = form;
@@ -33,7 +36,10 @@ export default function AddToCart({ product, onSubmit = null }) {
     <>
       <form
         className="product__info-quantity"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(() => {
+          setShowQuantityHelperText(false);
+          onSubmit();
+        })}
       >
         <p>QUANTITY</p>
 
@@ -44,12 +50,15 @@ export default function AddToCart({ product, onSubmit = null }) {
             render={({ field: { onChange, onBlur, value, name } }) => (
               <>
                 <span
-                  onClick={() =>
+                  onClick={() => {
+                    setShowQuantityHelperText(false); // max quantity
                     form.setValue(
                       name,
-                      Number.parseInt(value) ? Number.parseInt(value) - 1 : 1
-                    )
-                  }
+                      Number.parseInt(value)
+                        ? Number.parseInt(value) - 1
+                        : Number.parseInt(value)
+                    );
+                  }}
                 >
                   -
                 </span>
@@ -59,7 +68,7 @@ export default function AddToCart({ product, onSubmit = null }) {
                     const index = cartItems.findIndex(
                       (item) => item.id === product.id
                     );
-
+                    // increase 1 if value < product in stock
                     if (
                       (index === -1 && value < product.inStock) ||
                       (index >= 0 &&
@@ -70,6 +79,14 @@ export default function AddToCart({ product, onSubmit = null }) {
                         Number.parseInt(value) ? Number.parseInt(value) + 1 : 1
                       );
                     }
+                    // show the helpter text if the quantity over the stock limit
+                    if (
+                      (index === -1 && value === product.inStock) ||
+                      (index >= 0 &&
+                        value + cartItems[index].quantity === product.inStock)
+                    ) {
+                      setShowQuantityHelperText(true);
+                    }
                   }}
                 >
                   +
@@ -78,7 +95,19 @@ export default function AddToCart({ product, onSubmit = null }) {
             )}
           />
         </div>
-        <p>{errors?.message}</p>
+        <p style={{ color: "red", fontSize: "14px" }}>
+          {errors.quantity?.message}
+        </p>
+        <p
+          style={{
+            color: "red",
+            fontSize: "14px",
+            display: showQuantityHelperText ? "block" : "none",
+          }}
+        >
+          "over the stock limit!!!"
+        </p>
+
         <p>
           <span>{product.inStock}</span> IN STOCK
         </p>

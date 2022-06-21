@@ -7,7 +7,6 @@ import {
   increaseQuantity,
   removeFromCart,
   setQuantity,
-  showTextErrors,
 } from "../../../redux/cartSlice";
 import { cartItemTotalSelector } from "../../../redux/selectors";
 import "./Cart.scss";
@@ -17,7 +16,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const cartTotalAmount = useSelector(cartItemTotalSelector);
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const showErrors = useSelector((state) => state.cart.showTextErrors);
+  const [showTextErrors, setShowTextErrors] = useState(false);
   const [value, setValue] = useState();
 
   const handleQuantityChange = (e, id, size) => {
@@ -82,6 +81,7 @@ export default function Cart() {
                       <div>
                         <span
                           onClick={() => {
+                            // setShowTextErrors(false);
                             if (item.quantity === 1) {
                               dispatch(
                                 removeFromCart({ id: item.id, size: item.size })
@@ -121,26 +121,25 @@ export default function Cart() {
                               );
                             }
                             if (item.quantity === item.product.inStock) {
-                              dispatch(showTextErrors());
+                              // setShowTextErrors(true);
                             }
                           }}
                         >
                           +
                         </span>
                       </div>
-                      {/* text errors */}
-                      {showErrors === true && (
-                        <div
-                          className="text-errors"
-                          style={{
-                            color: "red",
-                            fontSize: "12px",
-                            textAlign: "right",
-                          }}
-                        >
-                          You access the limit in stock!
-                        </div>
-                      )}
+                      {/* text errors  */}
+                      {/* <div 
+                        className="text-errors"
+                        style={{
+                          color: "red",
+                          fontSize: "12px",
+                          textAlign: "right",
+                          display: showTextErrors ? "block" : "none",
+                        }}
+                      >
+                        You access the limit in stock!
+                      </div> */}
                     </td>
 
                     <td className="cart-amount">
