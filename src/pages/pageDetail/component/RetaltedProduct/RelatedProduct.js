@@ -50,9 +50,9 @@ export default function RelatedProduct({ product }) {
       <ul className="relatedProductList">
         {relatedList.map((item) => {
           return (
-            <li>
+            <li className="row">
               <div
-                className="card__item"
+                className="card__item col-6 col-md-4 col-lg-2"
                 key={item.id}
                 onClick={() => {
                   handleClick(item.id);
