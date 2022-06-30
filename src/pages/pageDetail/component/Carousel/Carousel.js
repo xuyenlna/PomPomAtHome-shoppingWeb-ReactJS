@@ -3,7 +3,7 @@ import "./Carousel.scss";
 
 export default function Carousel({ product }) {
   return (
-    <div className="col-8 carousel__Img">
+    <div className=" col-12 col-md-8 carousel__Img">
       <div
         id="carouselExampleControls"
         className="carousel slide"

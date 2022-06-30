@@ -40,7 +40,7 @@ export default function Information({ onSubmit }) {
   });
 
   return (
-    <div className="information col-7">
+    <div className="information col-12 col-md-7">
       {/* link-title */}
       <div className="linkTitle">
         <a

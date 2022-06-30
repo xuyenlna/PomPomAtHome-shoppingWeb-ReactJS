@@ -36,41 +36,45 @@ export default function FeaturedProducts() {
     <div className="home-featuredProduct">
       <p className="title">RELATED</p>
       <hr />
-      <ul className="featuredProductList">
+      <div className="featuredProductList row">
         {productList.map((item) => {
           return (
-            <li>
-              <div
-                className="card__item"
-                key={item.id}
-                onClick={() => {
-                  handleClick(item.id, item.params);
-                }}
-              >
-                <img
-                  className="firstImg"
-                  src={item.imageSrc[0]}
-                  alt="image1"
-                ></img>
+            <div
+              className="col-6 col-md-4 col-lg-2 card__item"
+              key={item.id}
+              onClick={() => {
+                handleClick(item.id, item.params);
+              }}
+            >
+              <img
+                className="firstImg"
+                src={item.imageSrc[0]}
+                alt="image1"
+              ></img>
+              <img
+                className="secondImg"
+                src={
+                  item.imageSrc[1] !== undefined
+                    ? item.imageSrc[1]
+                    : item.imageSrc[0]
+                }
+                alt="image2"
+              ></img>
+              {item.imageSrc[1] !== undefined && (
                 <img
                   className="secondImg"
-                  src={
-                    item.imageSrc[1] !== undefined
-                      ? item.imageSrc[1]
-                      : item.imageSrc[0]
-                  }
+                  src={item.imageSrc[1]}
                   alt="image2"
                 ></img>
-                <p>
-                  {item.productName.toUpperCase()}-{" "}
-                  {item.colorName.toUpperCase()}
-                </p>
-                <p>$ {item.price}</p>
-              </div>
-            </li>
+              )}
+              <p>
+                {item.productName.toUpperCase()}- {item.colorName.toUpperCase()}
+              </p>
+              <p>$ {item.price}</p>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

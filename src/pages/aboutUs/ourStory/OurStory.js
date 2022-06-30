@@ -20,13 +20,13 @@ export default function OurStory() {
         </div>
         <p className="slogan">“Life’s little luxury”</p>
         <div className="row ourStory-content">
-          <div className="col-7">
+          <div className="col-12 col-sm-7">
             <img
               src="https://cdn.shopify.com/s/files/1/1331/1269/files/PPAH-Hilde-Leiaghat-WEBBY.png?v=1585605460"
               alt="image"
             ></img>
           </div>
-          <div className="col-5">
+          <div className="col-12 col-sm-5">
             <p style={{ textAlign: "left" }}>
               As natives of Belgium, we naturally have a passion for everything
               linen. Designer and CEO, Hilde Leiaghat, grew up in the
@@ -51,7 +51,7 @@ export default function OurStory() {
         </div>
 
         <div className="row ourStory-content">
-          <div className="col-7">
+          <div className="col-12 col-sm-7">
             <p style={{ textAlign: "right", marginTop: "10px" }}>
               Pom Pom at Home’s principle of using 100% natural linen as our
               primary fiber demonstrates our steadfast commitment to lessening
@@ -68,7 +68,7 @@ export default function OurStory() {
               conscious, moral, ethical, and sustainable approach!
             </p>
           </div>
-          <div className="col-5">
+          <div className="col-12 col-sm-5">
             <img
               src="https://cdn.shopify.com/s/files/1/1331/1269/files/egg-carmel-web.png?v=1585604245"
               alt="image2"

@@ -20,7 +20,7 @@ export default function CardProductItem(props) {
     navigate(productId);
   };
   return (
-    <div className="col-4 card-item" onClick={handleClick}>
+    <div className="card-item col-12 col-md-6 col-lg-4" onClick={handleClick}>
       {onSale == "true" && <div className="onSale">SALE</div>}
       <div className="card-img">
         <a>

@@ -88,7 +88,7 @@ export default function ProductInfo({ product }) {
   };
 
   return (
-    <div className="col-4 product__info">
+    <div className="col-12 col-md-4 product__info">
       {/* price */}
       {product.onSale === "false" && (
         <p className="product__info-price">$ {product.price}</p>

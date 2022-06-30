@@ -9,7 +9,7 @@ export default function CartList() {
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
-    <div className="cart-list col-5">
+    <div className="cart-list col-12 col-md-5">
       <ul className="productItemList">
         {cartItems.map((item, index) => {
           return (

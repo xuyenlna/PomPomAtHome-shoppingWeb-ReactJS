@@ -19,25 +19,24 @@
 .home-banner {
     width: 100%;
     img {
-        max-width: 100%;
+        width: 100%;
+        object-fit: cover;
     }
+}
+.mobile-banner {
+    display: none;
 }
 
 .home-press {
     .press-list {
         width: 70%;
-        display: flex;
         margin: auto;
         .press-item {
-            width: 20%;
-            margin-right: 20px;
+            margin: auto;
             cursor: pointer;
             img {
-                width: 90%;
+                width: 80%;
             }
-        }
-        .press-item:last-child {
-            margin-right: -20px;
         }
     }
 }
@@ -47,10 +46,10 @@
     margin: auto;
     .blog-list {
         width: 100%;
-        margin: 0;
+        margin: auto;
         .blog-item {
             img {
-                max-width: 100%;
+                width: 100%;
                 height: 300px;
                 transition: transform 0.1s;
                 &:hover {
@@ -61,5 +60,15 @@
                 font-size: 20px;
             }
         }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: 575.98px) {
+    .laptop-banner {
+        display: none;
+    }
+    .mobile-banner {
+        display: block;
     }
 }

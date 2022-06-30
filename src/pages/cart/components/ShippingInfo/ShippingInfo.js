@@ -17,7 +17,7 @@ export default function ShippingInfo(props) {
     onClickPlaceAnOrder,
   } = props;
   return (
-    <div className="shipping-info col-7">
+    <div className="shipping-info col-12 col-md-7">
       {/* link-title */}
       <div className="linkTitle">
         <a
@@ -44,11 +44,11 @@ export default function ShippingInfo(props) {
       <div class="contact-info">
         <div className="row contact-info-detail">
           <div class="col-2">Contact</div>
-          <div class="col-8">
+          <div class="col-6 col-lg-8">
             {email} / {phone}
           </div>
           <div
-            class="col-2"
+            class="col-4 col-lg-2"
             style={{ color: "#e37648", cursor: "pointer" }}
             onClick={() => navigate("/cart/checkout", { replace: true })}
           >
@@ -58,12 +58,12 @@ export default function ShippingInfo(props) {
 
         <div className="row contact-info-detail">
           <div class="col-2">Ship to</div>
-          <div class="col-8">
+          <div class="col-6 col-lg-8">
             {firstName} {lastName}
             {address}, {moreAddress}, {city}, {postalCode}, {country}
           </div>
           <div
-            class="col-2"
+            class="col-4 col-lg-2"
             style={{ color: "#e37648", cursor: "pointer" }}
             onClick={() => navigate("/cart/checkout", { replace: true })}
           >

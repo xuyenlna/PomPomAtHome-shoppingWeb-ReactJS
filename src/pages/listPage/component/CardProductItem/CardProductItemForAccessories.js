@@ -12,7 +12,7 @@ export default function CardProductItemForAccessories(props) {
   };
 
   return (
-    <div className="col-4 card-item" onClick={handleClick}>
+    <div className="col-12 col-md-6 col-lg-4 card-item" onClick={handleClick}>
       <a className="card-img">
         {/* <img
           className="card-secondItemImg"
